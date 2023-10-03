@@ -8,6 +8,22 @@
   font-family: "Open Sans";
 }
 
+.input-group {
+  @apply relative bg-white;
+}
+
 input {
-  @apply block w-full border border-gray-300 rounded-md px-4 py-2 text-lg font-normal mt-1 focus:outline-none focus:border-green-500;
+  @apply relative z-10 block w-full bg-transparent border border-gray-300 rounded-md px-4 pt-6 pb-2 text-base font-normal mt-1 focus:outline-none focus:border-green-500;
+}
+
+label {
+  @apply absolute top-5 left-4 text-gray-400 transition-all duration-100 z-0;
+}
+
+input:focus ~ label {
+  @apply text-green-500 text-sm top-2;
+}
+
+input:not(:placeholder-shown) ~ label {
+  @apply text-sm top-2;
 }

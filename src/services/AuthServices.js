@@ -20,6 +20,14 @@ class AuthServices {
   signup = (requestBody) => {
     return this.api.post("/auth/signup", requestBody);
   };
+
+  login = (requestBody) => {
+    return this.api.post("/auth/login", requestBody);
+  };
+
+  verify = () => {
+    return this.api.get("/auth/verify");
+  };
 }
 
 const authServices = new AuthServices();

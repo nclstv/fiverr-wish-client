@@ -6,14 +6,15 @@ function Input({ children, state, setState, secure }) {
   };
 
   return (
-    <label className="text-md font-normal">
-      {children}
+    <div className="input-group">
       <input
+        placeholder=" "
         type={secure && "password"}
         value={state}
         onChange={handleOnChange}
       />
-    </label>
+      <label className="label">{children}</label>
+    </div>
   );
 }
 

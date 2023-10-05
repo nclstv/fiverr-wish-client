@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import authServices from "../../services/AuthServices";
 import Button from "../utils/Button";
 import Input from "../utils/Input";
+import InputPlace from "../utils/InputPlace";
 
 function FormSignup() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
@@ -21,6 +24,7 @@ function FormSignup() {
       .signup(newUser)
       .then(() => {
         setIsLoading(false);
+        navigate("/");
       })
       .catch((err) => {
         setIsLoading(false);
@@ -48,11 +52,9 @@ function FormSignup() {
       <Input state={password} setState={setPassword} secure={true}>
         Password*
       </Input>
+      <InputPlace value={address} setValue={setAddress} />
       <Input state={phoneNumber} setState={setPhoneNumber}>
         Phone number*
-      </Input>
-      <Input state={address} setState={setAddress}>
-        Postal address*
       </Input>
       <div className="border-b border-gray-300 h-0 my-4" />
       <Button isLoading={isLoading}>Register</Button>

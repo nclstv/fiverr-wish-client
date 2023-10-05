@@ -1,0 +1,17 @@
+.pac-container::after,
+.pac-icon {
+  @apply hidden;
+}
+
+.pac-item {
+  @apply p-4 text-sm cursor-pointer;
+}
+
+.pac-matched,
+.pac-item-query {
+  @apply text-sm;
+}
+
+.pac-container {
+  @apply shadow-none border border-gray-300 rounded-lg;
+}

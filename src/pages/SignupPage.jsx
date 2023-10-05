@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Navigate } from "react-router-dom";
 import FormSignup from "../components/form/FormSignup";
+import { AuthContext } from "../context/AuthContext";
 
 function SignupPage() {
-  return (
-    <div className="flex flex-col w-full justify-center items-center min-h-screen gap-8">
-      <h1 className="font-bold text-transparent text-6xl bg-clip-text bg-gradient-to-r from-green-500 to-lime-500 flex">
-        Prolink
-      </h1>
+  const { isLoggedIn } = useContext(AuthContext);
+  return isLoggedIn ? (
+    <Navigate to="/" />
+  ) : (
+    <div className="flex flex-col w-full justify-center items-center p-8">
       <FormSignup />
     </div>
   );

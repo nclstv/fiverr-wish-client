@@ -8,6 +8,7 @@ function AuthProviderWrapper({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoginFormShow, setIsLoginFormShow] = useState(false);
 
   const storeToken = (token) => {
     localStorage.setItem("authToken", token);
@@ -37,6 +38,12 @@ function AuthProviderWrapper({ children }) {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    setIsLoggedIn(false);
+    setUser(null);
+  };
+
   useEffect(() => {
     authenticateUser();
   }, []);
@@ -49,6 +56,9 @@ function AuthProviderWrapper({ children }) {
         isLoading,
         user,
         storeToken,
+        isLoginFormShow,
+        setIsLoginFormShow,
+        handleLogout,
       }}
     >
       {children}

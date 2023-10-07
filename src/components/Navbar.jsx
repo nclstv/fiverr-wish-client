@@ -35,9 +35,20 @@ function Navbar() {
               </button>
             </>
           ) : (
-            <button onClick={handleLogout} className="p-2 text-gray-500">
-              <span class="material-symbols-outlined">logout</span>
-            </button>
+            <>
+              <Link
+                to="/services/create"
+                className="p-2 px-4 text-white bg-green-500 rounded-full"
+              >
+                Create a service
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="p-2 text-gray-500 flex items-center justify-center"
+              >
+                <span class="material-symbols-outlined">logout</span>
+              </button>
+            </>
           )}
         </div>
       </div>

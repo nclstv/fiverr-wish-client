@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
+import IsPrivate from "./components/IsPrivate";
 import Navbar from "./components/Navbar";
 import FormLogin from "./components/form/FormLogin";
 import { AuthContext } from "./context/AuthContext";
+import AddServicePage from "./pages/AddServicePage";
 import HomePage from "./pages/HomePage";
 import SignupPage from "./pages/SignupPage";
 
@@ -15,6 +17,14 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route
+          path="/services/create"
+          element={
+            <IsPrivate>
+              <AddServicePage />
+            </IsPrivate>
+          }
+        />
       </Routes>
     </>
   );

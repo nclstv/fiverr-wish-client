@@ -6,7 +6,7 @@ function Input({ children, state, setState, secure }) {
   };
 
   return (
-    <div className="input-group">
+    <div className="input-group bg-white">
       <input
         placeholder=" "
         type={secure && "password"}

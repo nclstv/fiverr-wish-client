@@ -1,6 +1,6 @@
 import React from "react";
 
-function Input({ children, state, setState, secure }) {
+function Input({ children, state, setState, type }) {
   const handleOnChange = (e) => {
     setState(e.target.value);
   };
@@ -9,7 +9,7 @@ function Input({ children, state, setState, secure }) {
     <div className="input-group bg-white">
       <input
         placeholder=" "
-        type={secure && "password"}
+        type={type}
         value={state}
         onChange={handleOnChange}
       />

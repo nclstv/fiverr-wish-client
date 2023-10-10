@@ -1,11 +1,12 @@
-function Textarea({ children }) {
-  const handleChange = (e) => {
-    console.log(e);
-  };
-
+function Textarea({ children, value, setValue }) {
   return (
     <div className="input-group bg-white">
-      <textarea placeholder=" " onChange={handleChange} rows={3} />
+      <textarea
+        placeholder=" "
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        rows={3}
+      />
       <label className="label">{children}</label>
     </div>
   );

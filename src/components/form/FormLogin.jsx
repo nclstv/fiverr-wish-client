@@ -66,7 +66,7 @@ function FormLogin({ show }) {
           <Input state={email} setState={setEmail}>
             Email address*
           </Input>
-          <Input state={password} setState={setPassword} secure={true}>
+          <Input state={password} setState={setPassword} type="password">
             Password*
           </Input>
           <div className="border-b border-gray-300 h-0 my-4" />

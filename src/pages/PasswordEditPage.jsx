@@ -7,9 +7,7 @@ function EmailEditForm() {
           <label
             className="block text-gray-600 text-sm font-semibold mb-2"
             htmlFor="currentPassword"
-          >
-            Current Password
-          </label>
+          ></label>
           <input
             type="password"
             id="currentPassword"

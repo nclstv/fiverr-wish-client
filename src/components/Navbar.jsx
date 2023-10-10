@@ -46,7 +46,7 @@ function Navbar() {
                 onClick={handleLogout}
                 className="p-2 text-gray-500 flex items-center justify-center"
               >
-                <span class="material-symbols-outlined">logout</span>
+                <span className="material-symbols-outlined">logout</span>
               </button>
             </>
           )}

@@ -63,7 +63,11 @@ function AddServicePage() {
         <div>
           {errors &&
             errors.map((error) => {
-              return <p className="text-sm text-red-500 p-0 m-0">{error}</p>;
+              return (
+                <p key={error} className="text-sm text-red-500 p-0 m-0">
+                  {error}
+                </p>
+              );
             })}
         </div>
       </form>

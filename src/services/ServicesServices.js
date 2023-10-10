@@ -20,6 +20,14 @@ class ServicesServices {
   create = (requestBody) => {
     return this.api.post("/api/services", requestBody);
   };
+
+  getServices = () => {
+    return this.api.get("/api/services");
+  };
+
+  getService = (id) => {
+    return this.api.get("/api/services/" + id);
+  };
 }
 
 const servicesServices = new ServicesServices();

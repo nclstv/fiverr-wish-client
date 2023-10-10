@@ -13,7 +13,6 @@ function AddServicePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e) => {
-    console.log("bonsoir");
     e.preventDefault();
     const newServices = { title, image, estimatePricePerDay, description };
 

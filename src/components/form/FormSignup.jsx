@@ -49,7 +49,7 @@ function FormSignup() {
       <Input state={username} setState={setUsername}>
         Username*
       </Input>
-      <Input state={password} setState={setPassword} secure={true}>
+      <Input state={password} setState={setPassword} type="password">
         Password*
       </Input>
       <InputPlace value={address} setValue={setAddress} />

@@ -36,6 +36,14 @@ class ServicesServices {
   uploadImage = (file) => {
     return this.api.post("/api/upload", file);
   };
+
+  request = (serviceId) => {
+    return this.api.get("/api/requests/" + serviceId);
+  };
+
+  servicesMe = () => {
+    return this.api.get("/api/services/me");
+  };
 }
 
 const servicesServices = new ServicesServices();

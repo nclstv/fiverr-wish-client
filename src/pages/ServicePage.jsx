@@ -35,6 +35,17 @@ function ServicePage() {
       });
   };
 
+  const handleRequest = () => {
+    servicesServices
+      .request(service._id)
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   if (service) {
     return (
       <div className="w-full max-w-7xl mx-auto py-4">
@@ -99,7 +110,9 @@ function ServicePage() {
           </div>
           <div>
             {!service.owner.email && (
-              <Button>Ask for contact informations</Button>
+              <Button handleOnClick={handleRequest}>
+                Ask for contact informations
+              </Button>
             )}
           </div>
         </div>

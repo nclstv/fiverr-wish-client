@@ -34,6 +34,7 @@ function HomePage() {
           services.map(({ _id, title, owner, estimatePricePerDay, image }) => {
             return (
               <div
+                key={_id}
                 className="rounded-lg shadow-lg p-4 border cursor-pointer"
                 onClick={() => handleOnClick(_id)}
               >

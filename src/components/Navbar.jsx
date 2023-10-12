@@ -42,6 +42,7 @@ function Navbar() {
               >
                 Create a service
               </Link>
+              <Link to="/profile">Profile</Link>
               <button
                 onClick={handleLogout}
                 className="p-2 text-gray-500 flex items-center justify-center"

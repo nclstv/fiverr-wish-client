@@ -6,6 +6,7 @@ import FormLogin from "./components/form/FormLogin";
 import { AuthContext } from "./context/AuthContext";
 import AddServicePage from "./pages/AddServicePage";
 import HomePage from "./pages/HomePage";
+import ServicePage from "./pages/ServicePage";
 import SignupPage from "./pages/SignupPage";
 
 function App() {
@@ -23,6 +24,14 @@ function App() {
           element={
             <IsPrivate>
               <AddServicePage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/services/:id"
+          element={
+            <IsPrivate>
+              <ServicePage />
             </IsPrivate>
           }
         />

@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import servicesServices from "../services/ServicesServices";
 
 function HomePage() {
   const navigate = useNavigate();
   const [services, setServices] = useState(null);
+  const { isLoggedIn, setIsLoginFormShow } = useContext(AuthContext);
 
   useEffect(() => {
     servicesServices
@@ -18,7 +20,11 @@ function HomePage() {
   }, []);
 
   const handleOnClick = (id) => {
-    navigate(`/services/${id}`);
+    if (isLoggedIn) {
+      navigate(`/services/${id}`);
+    } else {
+      setIsLoginFormShow(true);
+    }
   };
 
   return (

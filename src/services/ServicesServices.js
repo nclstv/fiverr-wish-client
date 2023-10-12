@@ -28,6 +28,14 @@ class ServicesServices {
   getService = (id) => {
     return this.api.get("/api/services/" + id);
   };
+
+  delete = (id) => {
+    return this.api.delete("/api/services/" + id);
+  };
+
+  uploadImage = (file) => {
+    return this.api.post("/api/upload", file);
+  };
 }
 
 const servicesServices = new ServicesServices();

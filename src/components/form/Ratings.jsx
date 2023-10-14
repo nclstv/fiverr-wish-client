@@ -1,43 +1,35 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-const Ratings = ({ serviceId }) => {
-  const [ratings, setRatings] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`/api/services/${serviceId}/ratings`)
-      .then((response) => {
-        setRatings(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [serviceId]);
-
+const Ratings = ({ ratings }) => {
   return (
     <div>
-      <h3>Ratings:</h3>
-      {ratings.map((rating, index) => (
-        <div key={index}>
-          <h4>{rating.user}:</h4>
-          <p>{rating.description}</p>
-          <div>
-            {[1, 2, 3, 4, 5].map((value) => (
-              <span
-                key={value}
+      {ratings &&
+        ratings.map((rating) => (
+          <div key={rating._id} className="py-4 border-b">
+            <div className="flex items-center gap-2">
+              <div
                 style={{
-                  color: rating.rating >= value ? "gold" : "gray",
-                  fontSize: "24px",
+                  backgroundImage: `url(${rating.user.profilePicture})`,
                 }}
-              >
-                ★
-              </span>
-            ))}
+                className="h-8 w-8 rounded-full bg-cover bg-center"
+              />
+              <h4>{rating.user.username}</h4>
+            </div>
+            <div>
+              {[1, 2, 3, 4, 5].map((value) => (
+                <span
+                  key={value}
+                  style={{
+                    color:
+                      rating.rating >= value ? "orange" : "rgba(0,0,0,0.2)",
+                    fontSize: "24px",
+                  }}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
+            <p>{rating.comment}</p>
           </div>
-          <p>Rating: {rating.rating} stars</p>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };

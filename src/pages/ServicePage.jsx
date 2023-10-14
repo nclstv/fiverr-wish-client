@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../components/utils/Button";
 import { AuthContext } from "../context/AuthContext";
 import servicesServices from "../services/ServicesServices";
+import Ratings from "../components/form/Ratings";
 
 function ServicePage() {
   const { id } = useParams();
@@ -161,6 +162,7 @@ function ServicePage() {
           )}
         </div>
         <h3 className="text-2xl font-semibold mt-4">Reviews</h3>
+        <Ratings serviceId={id} />
       </div>
     );
   }

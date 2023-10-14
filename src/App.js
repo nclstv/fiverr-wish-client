@@ -34,14 +34,7 @@ function App() {
         <Route path="/username-edit" element={<UsernameEditPage />} />
         <Route path="/email-edit" element={<EmailEditPage />} />
         <Route path="/password-edit" element={<PasswordEditPage />} />
-        <Route
-          path="/services/create"
-          element={
-            <IsPrivate>
-              <AddServicePage />
-            </IsPrivate>
-          }
-        />
+        <Route path="/services/create" element={<AddServicePage />} />
         <Route
           path="/services/:serviceId/requests"
           element={

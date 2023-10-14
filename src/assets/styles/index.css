@@ -39,3 +39,11 @@ textarea:focus ~ label {
 textarea:not(:placeholder-shown) ~ label {
   @apply text-sm top-2;
 }
+
+th {
+  @apply p-4;
+}
+
+td {
+  @apply p-4 border-b;
+}

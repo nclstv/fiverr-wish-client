@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
-  const { setIsLoginFormShow, isLoggedIn, handleLogout } =
+  const { setIsLoginFormShow, isLoggedIn, handleLogout, user } =
     useContext(AuthContext);
 
   const location = useLocation();
@@ -17,8 +17,8 @@ function Navbar() {
   };
 
   return (
-    <nav className="flex bg-gray-50 border border-gray-200 py-2 px-8 items-center justify-center">
-      <div className="w-full max-w-7xl flex">
+    <nav className="flex bg-gray-50 border border-gray-200 py-2 items-center justify-center">
+      <div className="w-full max-w-7xl flex px-4">
         <Link to="/">
           <h1 className="font-bold text-transparent text-3xl bg-clip-text bg-gradient-to-r from-green-500 to-lime-500 flex">
             Prolink
@@ -41,6 +41,12 @@ function Navbar() {
                 className="p-2 px-4 text-white bg-green-500 rounded-full"
               >
                 Create a service
+              </Link>
+              <Link to="/profile">
+                <div
+                  style={{ backgroundImage: `url(${user.profilePicture})` }}
+                  className="w-9 h-9 bg-cover rounded-full bg-center"
+                />
               </Link>
               <button
                 onClick={handleLogout}

@@ -38,11 +38,27 @@ class ServicesServices {
   };
 
   request = (serviceId) => {
-    return this.api.get("/api/requests/" + serviceId);
+    return this.api.post("/api/requests/" + serviceId);
+  };
+
+  getMyRequest = () => {
+    return this.api.get("/api/requests/user/");
+  };
+
+  deleteRequest = (requestId) => {
+    return this.api.delete("/api/requests/" + requestId);
+  };
+
+  getServiceRequests = (serviceId) => {
+    return this.api.get("/api/requests/service/" + serviceId);
   };
 
   servicesMe = () => {
     return this.api.get("/api/services/me");
+  };
+
+  updateRequest = (requestId, status) => {
+    return this.api.put("/api/requests/" + requestId, { status });
   };
 }
 

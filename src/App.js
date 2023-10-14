@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import PasswordEditPage from "./pages/PasswordEditPage";
 import ProfilePage from "./pages/ProfilePage";
 import ServicePage from "./pages/ServicePage";
+import ServiceRequestsPage from "./pages/ServiceRequestsPage";
 import SignupPage from "./pages/SignupPage";
 import UsernameEditPage from "./pages/UsernameEditPage";
 
@@ -38,6 +39,14 @@ function App() {
           element={
             <IsPrivate>
               <AddServicePage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/services/:serviceId/requests"
+          element={
+            <IsPrivate>
+              <ServiceRequestsPage />
             </IsPrivate>
           }
         />

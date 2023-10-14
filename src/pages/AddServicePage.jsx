@@ -8,6 +8,8 @@ import servicesServices from "../services/ServicesServices";
 
 function AddServicePage() {
   const navigate = useNavigate();
+
+  // Initialise state
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [estimatePricePerDay, setEstimatePricePerDay] = useState("");
@@ -16,6 +18,7 @@ function AddServicePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
 
+  // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
     const newServices = { title, image, estimatePricePerDay, description };

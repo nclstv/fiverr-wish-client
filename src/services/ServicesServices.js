@@ -60,6 +60,10 @@ class ServicesServices {
   updateRequest = (requestId, status) => {
     return this.api.put("/api/requests/" + requestId, { status });
   };
+
+  createRating = (serviceId, requestBody) => {
+    return this.api.post("/api/ratings/" + serviceId, requestBody);
+  };
 }
 
 const servicesServices = new ServicesServices();

@@ -30,9 +30,7 @@ function ServicePage() {
         setRequest(result.data.request);
         setIsOwner(result.data.service.owner._id === user._id);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleDelete = () => {
@@ -41,9 +39,7 @@ function ServicePage() {
       .then(() => {
         navigate("/");
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleRequest = () => {
@@ -52,9 +48,7 @@ function ServicePage() {
       .then((result) => {
         setRequest(result.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const getRequests = (id) => {
@@ -90,9 +84,11 @@ function ServicePage() {
                 )}
                 Requests
               </Link>
-              <button className="text-base bg-gray-500 px-4 py-2 rounded-md text-white">
-                Update
-              </button>
+              <Link to={`/services/${id}/update`}>
+                <button className="text-base bg-gray-500 px-4 py-2 rounded-md text-white">
+                  Update
+                </button>
+              </Link>
               <button
                 onClick={handleDelete}
                 className="text-base bg-red-500 px-4 py-2 rounded-md text-white"

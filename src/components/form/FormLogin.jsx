@@ -5,6 +5,7 @@ import Button from "../utils/Button";
 import Input from "../utils/Input";
 
 function FormLogin({ show }) {
+  // Retrieve values from AuthContext
   const { authenticateUser, storeToken, isLoggedIn, setIsLoginFormShow } =
     useContext(AuthContext);
 
@@ -58,7 +59,7 @@ function FormLogin({ show }) {
           </h1>
           <span
             onClick={() => setIsLoginFormShow(false)}
-            class="material-symbols-outlined text-3xl absolute top-6 right-6 cursor-pointer"
+            className="material-symbols-outlined text-3xl absolute top-6 right-6 cursor-pointer"
           >
             close
           </span>

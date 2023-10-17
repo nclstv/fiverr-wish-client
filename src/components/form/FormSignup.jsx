@@ -90,12 +90,14 @@ function FormSignup() {
               className="bg-cover bg-center w-full h-32 rounded-full overflow-hidden"
               style={{ backgroundImage: `url(${profilePicture})` }}
             >
-              <span class="material-symbols-outlined text-white bg-green-500 text-xl absolute bottom-0 right-0 w-10 h-10 flex justify-center items-center rounded-full border-2 border-gray-50">
+              <span className="material-symbols-outlined text-white bg-green-500 text-xl absolute bottom-0 right-0 w-10 h-10 flex justify-center items-center rounded-full border-2 border-gray-50">
                 edit
               </span>
             </div>
           ) : (
-            <span class="material-symbols-outlined text-4xl">add_reaction</span>
+            <span className="material-symbols-outlined text-4xl">
+              add_reaction
+            </span>
           )}
         </label>
       </div>

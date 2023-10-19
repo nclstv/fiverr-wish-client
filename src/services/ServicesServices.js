@@ -64,6 +64,10 @@ class ServicesServices {
   createRating = (serviceId, requestBody) => {
     return this.api.post("/api/ratings/" + serviceId, requestBody);
   };
+
+  updateService = (serviceId, requestBody) => {
+    return this.api.put("/api/services/" + serviceId, requestBody);
+  };
 }
 
 const servicesServices = new ServicesServices();

@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../components/utils/Button";
 import Input from "../components/utils/Input";
 import Spinner from "../components/utils/Spinner";
 import Textarea from "../components/utils/Textarea";
 import servicesServices from "../services/ServicesServices";
 
-function AddServicePage({ headerTitle, serviceId }) {
+function UpdateServicePage() {
+  const { serviceId } = useParams();
   const navigate = useNavigate();
 
   // Initialise state
@@ -18,17 +19,26 @@ function AddServicePage({ headerTitle, serviceId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
 
+  useEffect(() => {
+    servicesServices
+      .getService(serviceId)
+      .then(({ data: { service } }) => {
+        setTitle(service.title);
+        setDescription(service.description);
+        setEstimatePricePerDay(service.estimatePricePerDay);
+        setImage(service.image);
+      })
+      .catch((err) => {});
+  }, [serviceId]);
+
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newServices = { title, image, estimatePricePerDay, description };
-
-    setIsLoading(true);
-
+    const updateService = { title, description, image, estimatePricePerDay };
     servicesServices
-      .create(newServices)
+      .updateService(serviceId, updateService)
       .then((result) => {
-        navigate(`/services/${result.data._id}`);
+        navigate(`/services/${serviceId}`);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -60,7 +70,7 @@ function AddServicePage({ headerTitle, serviceId }) {
         className="flex flex-col bg-gray-50 border-gray-200 border p-8 gap-4 justify-center w-full max-w-md rounded-xl"
       >
         <h1 className="text-center font-medium text-xl text-gray-700">
-          {headerTitle}
+          Update your service
         </h1>
         <div className="border-b border-gray-300 h-0 my-4" />
         <Input state={title} setState={setTitle}>
@@ -110,7 +120,7 @@ function AddServicePage({ headerTitle, serviceId }) {
           Description
         </Textarea>
         <div className="border-b border-gray-300 h-0 my-4" />
-        <Button isLoading={isLoading}>Create a service</Button>
+        <Button isLoading={isLoading}>Update service</Button>
         <div>
           {errors &&
             errors.map((error) => {
@@ -126,4 +136,4 @@ function AddServicePage({ headerTitle, serviceId }) {
   );
 }
 
-export default AddServicePage;
+export default UpdateServicePage;

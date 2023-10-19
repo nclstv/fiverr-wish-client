@@ -5,14 +5,13 @@ import Navbar from "./components/Navbar";
 import FormLogin from "./components/form/FormLogin";
 import { AuthContext } from "./context/AuthContext";
 import AddServicePage from "./pages/AddServicePage";
-import EmailEditPage from "./pages/EmailEditPage";
 import HomePage from "./pages/HomePage";
 import PasswordEditPage from "./pages/PasswordEditPage";
 import ProfilePage from "./pages/ProfilePage";
 import ServicePage from "./pages/ServicePage";
 import ServiceRequestsPage from "./pages/ServiceRequestsPage";
 import SignupPage from "./pages/SignupPage";
-import UsernameEditPage from "./pages/UsernameEditPage";
+import UpdateServicePage from "./pages/UpdateServicePage";
 
 function App() {
   const { isLoginFormShow } = useContext(AuthContext);
@@ -31,10 +30,22 @@ function App() {
             </IsPrivate>
           }
         />
-        <Route path="/username-edit" element={<UsernameEditPage />} />
-        <Route path="/email-edit" element={<EmailEditPage />} />
-        <Route path="/password-edit" element={<PasswordEditPage />} />
-        <Route path="/services/create" element={<AddServicePage />} />
+        <Route
+          path="/password-edit"
+          element={
+            <IsPrivate>
+              <PasswordEditPage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/services/create"
+          element={
+            <IsPrivate>
+              <AddServicePage headerTitle="Create a service" />
+            </IsPrivate>
+          }
+        />
         <Route
           path="/services/:serviceId/requests"
           element={
@@ -48,6 +59,14 @@ function App() {
           element={
             <IsPrivate>
               <ServicePage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/services/:serviceId/update"
+          element={
+            <IsPrivate>
+              <UpdateServicePage />
             </IsPrivate>
           }
         />

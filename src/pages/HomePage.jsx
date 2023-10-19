@@ -56,13 +56,24 @@ function HomePage() {
                     </p>
                   </div>
                 </div>
-                {/* <p className="text-sm text-gray-500">28km away - Paris</p> */}
                 <p className="text-2xl font-bold text-green-500 leading-none">
                   {estimatePricePerDay}$ / DAY
                 </p>
               </div>
             );
           })}
+      </div>
+
+      {/* Centered Welcome Message for All Users */}
+      <div className="text-center my-8">
+        <h1 className="text-3xl font-bold text-gray-800">
+          Welcome to Our Website!
+        </h1>
+        <p className="mt-2 text-lg text-gray-600">
+          Discover a world of opportunities where you can offer and find various
+          services in your local community. Whether you're looking for help or
+          want to share your skills, you've come to the right place.
+        </p>
       </div>
     </div>
   );

@@ -12,66 +12,70 @@ import ServicePage from "./pages/ServicePage";
 import ServiceRequestsPage from "./pages/ServiceRequestsPage";
 import SignupPage from "./pages/SignupPage";
 import UpdateServicePage from "./pages/UpdateServicePage";
+import Footer from "./components/utils/Footer";
 
 function App() {
   const { isLoginFormShow } = useContext(AuthContext);
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <FormLogin show={isLoginFormShow} />
       <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route
-          path="/profile"
-          element={
-            <IsPrivate>
-              <ProfilePage />
-            </IsPrivate>
-          }
-        />
-        <Route
-          path="/password-edit"
-          element={
-            <IsPrivate>
-              <PasswordEditPage />
-            </IsPrivate>
-          }
-        />
-        <Route
-          path="/services/create"
-          element={
-            <IsPrivate>
-              <AddServicePage headerTitle="Create a service" />
-            </IsPrivate>
-          }
-        />
-        <Route
-          path="/services/:serviceId/requests"
-          element={
-            <IsPrivate>
-              <ServiceRequestsPage />
-            </IsPrivate>
-          }
-        />
-        <Route
-          path="/services/:id"
-          element={
-            <IsPrivate>
-              <ServicePage />
-            </IsPrivate>
-          }
-        />
-        <Route
-          path="/services/:serviceId/update"
-          element={
-            <IsPrivate>
-              <UpdateServicePage />
-            </IsPrivate>
-          }
-        />
-      </Routes>
-    </>
+      <div className="flex-grow">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route
+            path="/profile"
+            element={
+              <IsPrivate>
+                <ProfilePage />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/password-edit"
+            element={
+              <IsPrivate>
+                <PasswordEditPage />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/services/create"
+            element={
+              <IsPrivate>
+                <AddServicePage headerTitle="Create a service" />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/services/:serviceId/requests"
+            element={
+              <IsPrivate>
+                <ServiceRequestsPage />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/services/:id"
+            element={
+              <IsPrivate>
+                <ServicePage />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/services/:serviceId/update"
+            element={
+              <IsPrivate>
+                <UpdateServicePage />
+              </IsPrivate>
+            }
+          />
+        </Routes>
+      </div>
+      <Footer />
+    </div>
   );
 }
 

@@ -7,6 +7,8 @@ import Button from "../utils/Button";
 import Input from "../utils/Input";
 import InputPlace from "../utils/InputPlace";
 import Spinner from "../utils/Spinner";
+import "react-phone-input-2/lib/style.css";
+import InputPhone from "../utils/InputPhone";
 
 function FormSignup() {
   const navigate = useNavigate();
@@ -117,9 +119,8 @@ function FormSignup() {
         Password*
       </Input>
       <InputPlace value={address} setValue={setAddress} />
-      <Input state={phoneNumber} setState={setPhoneNumber}>
-        Phone number*
-      </Input>
+      <InputPhone value={phoneNumber} onChange={setPhoneNumber} />
+
       <div className="border-b border-gray-300 h-0 my-4" />
       <Button isLoading={isLoading}>Register</Button>
       {errorMessage && (

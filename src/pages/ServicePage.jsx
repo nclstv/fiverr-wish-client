@@ -164,7 +164,11 @@ function ServicePage() {
         </div>
         <h3 className="text-2xl font-semibold my-4">Reviews</h3>
         <FormRating serviceId={id} getService={() => getService(id)} />
-        <Ratings ratings={service.ratings} />
+        <Ratings
+          ratings={service.ratings}
+          getService={getService}
+          serviceId={id}
+        />
       </div>
     );
   }

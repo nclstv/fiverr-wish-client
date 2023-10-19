@@ -68,6 +68,14 @@ class ServicesServices {
   updateService = (serviceId, requestBody) => {
     return this.api.put("/api/services/" + serviceId, requestBody);
   };
+
+  deleteRating = (ratingId) => {
+    return this.api.delete("/api/ratings/" + ratingId);
+  };
+
+  getRatingMe = () => {
+    return this.api.get("/api/ratings/me/");
+  };
 }
 
 const servicesServices = new ServicesServices();

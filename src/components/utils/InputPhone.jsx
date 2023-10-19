@@ -9,14 +9,12 @@ function InputPhone({ value, onChange }) {
       value={value}
       onChange={onChange}
       inputStyle={{ width: "100%" }}
-      containerStyle={{ marginBottom: "50px" }}
       inputProps={{
         name: "phoneNumber",
         required: true,
         className:
-          "relative z-10 block w-full bg-transparent border border-gray-300 rounded-md pl-12 py-4 text-base font-normal focus:outline-none focus:border-green-500",
+          "pl-12 py-4 text-base border focus:outline-none focus:border-green-500 rounded-lg",
       }}
-      inputClass=""
     />
   );
 }

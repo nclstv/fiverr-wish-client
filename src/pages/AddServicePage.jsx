@@ -17,6 +17,7 @@ function AddServicePage({ headerTitle, serviceId }) {
   const [errors, setErrors] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
 
   // handleSubmit
   const handleSubmit = (e) => {
@@ -41,6 +42,7 @@ function AddServicePage({ headerTitle, serviceId }) {
 
   const handleFileUpload = (e) => {
     setIsImageLoading(true);
+    setUploadError("");
     const uploadData = new FormData();
     uploadData.append("image", e.target.files[0]);
 
@@ -50,7 +52,12 @@ function AddServicePage({ headerTitle, serviceId }) {
         setImage(response.data.fileUrl);
         setIsImageLoading(false);
       })
-      .catch((err) => console.log("Error while uploading the file: ", err));
+      .catch((err) => {
+        if (err.response.data.message) {
+          setUploadError(err.response.data.message);
+        }
+        setIsImageLoading(false);
+      });
   };
 
   return (
@@ -69,7 +76,9 @@ function AddServicePage({ headerTitle, serviceId }) {
         <div className="bg-white">
           <label
             htmlFor="file"
-            className="cursor-pointer relative w-full border top-0  left-0 block w- bg-transparent border-gray-300 rounded-md p-4 text-base font-normal focus:outline-none focus:border-green-500"
+            className={`cursor-pointer relative w-full border top-0  left-0 block w- bg-transparent ${
+              uploadError ? "border-red-500" : "border-gray-300"
+            } rounded-md p-4 text-base font-normal focus:outline-none focus:border-green-500`}
           >
             {isImageLoading ? (
               <div className="flex items-center justify-center">
@@ -85,13 +94,14 @@ function AddServicePage({ headerTitle, serviceId }) {
                 </span>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-gray-400">
                 <span className="material-symbols-outlined">photo_library</span>
                 Image
               </div>
             )}
           </label>
         </div>
+        {uploadError && <p className="text-red-400 text-sm">{uploadError}</p>}
         <input
           className="hidden"
           type="file"

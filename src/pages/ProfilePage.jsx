@@ -4,28 +4,12 @@ import Input from "../components/utils/Input";
 import { AuthContext } from "../context/AuthContext";
 import servicesServices from "../services/ServicesServices";
 
-const RatingStars = ({ rating }) => {
-  const stars = [];
-  for (let i = 1; i <= 5; i++) {
-    stars.push(
-      <span
-        key={i}
-        className={`text-3xl ${
-          i <= rating ? "text-yellow-400" : "text-gray-300"
-        }`}
-      >
-        ★
-      </span>
-    );
-  }
-  return <div className="flex">{stars}</div>;
-};
-
 function ProfilePage() {
   const { user } = useContext(AuthContext);
   const [services, setServices] = useState([]);
   const [requests, setRequests] = useState([]);
   const [isEditable, setIsEditable] = useState(false);
+  const [ratings, setRatings] = useState(null);
 
   const [email, setEmail] = useState(user.email);
   const [username, setUsername] = useState(user.username);
@@ -42,6 +26,7 @@ function ProfilePage() {
       });
 
     getRequest();
+    getRatingsMe();
   }, []);
 
   const getRequest = () => {
@@ -54,11 +39,6 @@ function ProfilePage() {
         console.log(err);
       });
   };
-
-  const ratings = [
-    { id: 1, rating: 5, comment: "Great service!" },
-    { id: 2, rating: 4, comment: "Very satisfied." },
-  ];
 
   const handleDeleteRequest = (requestId) => {
     servicesServices
@@ -79,6 +59,32 @@ function ProfilePage() {
     }
   };
 
+  const getRatingsMe = () => {
+    servicesServices
+      .getRatingMe()
+      .then((result) => {
+        setRatings(result.data);
+      })
+      .catch((err) => {});
+  };
+
+  const RatingStars = ({ rating }) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <span
+          key={i}
+          className={`text-3xl ${
+            i <= rating ? "text-yellow-400" : "text-gray-300"
+          }`}
+        >
+          ★
+        </span>
+      );
+    }
+    return <div className="flex">{stars}</div>;
+  };
+
   if (user) {
     return (
       <div className="w-full max-w-7xl mx-auto py-4 px-4">
@@ -91,7 +97,7 @@ function ProfilePage() {
             <h1 className="text-3xl font-semibold">{user.username}</h1>
 
             <div className="flex items-center gap-1">
-              <span class="material-symbols-outlined">location_on</span>
+              <span className="material-symbols-outlined">location_on</span>
               <h2 className="text-lg">{user.address}</h2>
             </div>
           </div>
@@ -148,7 +154,7 @@ function ProfilePage() {
               <p className="text-gray-500">************</p>
             </div>
             <Link to="/password-edit">
-              <span class="material-symbols-outlined bg-green-500 h-10 w-10 flex justify-center items-center text-xl rounded-lg text-white cursor-pointer">
+              <span className="material-symbols-outlined bg-green-500 h-10 w-10 flex justify-center items-center text-xl rounded-lg text-white cursor-pointer">
                 edit
               </span>
             </Link>
@@ -167,7 +173,7 @@ function ProfilePage() {
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {services.map((service) => (
-            <Link to={`/services/${service._id}`}>
+            <Link to={`/services/${service._id}`} key={service._id}>
               <div className="rounded-lg bg-gray-50 p-4 border flex gap-4 items-start">
                 <div
                   className="bg-center bg-cover h-20 aspect-square rounded-md"
@@ -196,6 +202,7 @@ function ProfilePage() {
           {requests.map((request) => (
             <div
               className={`rounded-lg bg-gray-50 p-4 border flex gap-4 items-start relative `}
+              key={request._id}
             >
               <div
                 className="bg-center bg-cover h-20 aspect-square rounded-md"
@@ -238,19 +245,24 @@ function ProfilePage() {
           ))}
         </div>
 
-        <div className="mt-8">
-          <h2 className="text-2xl font-semibold">Ratings Sent</h2>
-          <ul>
-            {ratings.map((rating) => (
-              <li key={rating.id} className="mt-2">
-                <div className="text-gray-500">
-                  <RatingStars rating={rating.rating} />
-                </div>
-                <div className="text-gray-600">{rating.comment}</div>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {ratings && (
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold">Ratings Sent</h2>
+            <div className="py-4">
+              {ratings.map((rating) => {
+                return (
+                  <Link to={`/services/${rating.service._id}`} key={rating._id}>
+                    <div className="border-b py-4">
+                      <h1 className="font-bold">{rating.service.title}</h1>
+                      <RatingStars rating={rating.rating} />
+                      <p>{rating.comment}</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     );
   }

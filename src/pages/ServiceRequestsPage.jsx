@@ -64,69 +64,85 @@ function ServiceRequestsPage() {
         <table className=" bg-gray-50 border rounded-lg w-full border-collapse">
           <thead className="text-left bg-gray-100">
             <tr>
-              <th>User</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th className="p-4">User</th>
+              <th className="p-4">Status</th>
+              <th className="p-4">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {requests.map((request) => {
-              return (
-                <tr key={request._id}>
-                  <td className="flex items-center gap-2 justify-start">
-                    <div
-                      style={{
-                        backgroundImage: `url(${request.requestUser.profilePicture})`,
-                      }}
-                      className="h-8 w-8 bg-cover bg-center rounded-full"
-                    />
-                    <p>{request.requestUser.username}</p>
-                  </td>
-                  <td>
-                    {request.status === "pending" && (
-                      <p className="text-orange-500 flex items-center gap-1">
-                        <span className="material-symbols-outlined">
-                          hourglass_empty
-                        </span>
-                        Pending
-                      </p>
-                    )}
-                    {request.status === "accepted" && (
-                      <p className="text-green-500 flex items-center gap-1">
-                        <span className="material-symbols-outlined">
-                          check_circle
-                        </span>
-                        Accepted
-                      </p>
-                    )}
-                    {request.status === "denied" && (
-                      <p className="text-red-500 flex items-center gap-1">
-                        <span className="material-symbols-outlined">
-                          do_not_disturb_on
-                        </span>
-                        Deny
-                      </p>
-                    )}
-                  </td>
-                  <td className="flex gap-2 w-32">
-                    {request.status !== "accepted" && (
-                      <button
-                        onClick={() => updateRequest(request._id, "accepted")}
-                        className="bg-green-500 text-white py-1 px-4 rounded-md"
-                      >
-                        Accept
-                      </button>
-                    )}
-                    <button
-                      onClick={() => updateRequest(request._id, "denied")}
-                      className="bg-red-500 text-white py-1 px-4 rounded-md"
-                    >
-                      Deny
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            {requests.length > 0 ? (
+              requests.map((request) => {
+                return (
+                  <tr key={request._id} className="border-b">
+                    <td className="p-4">
+                      <div className="flex items-center gap-2 justify-start">
+                        <div
+                          style={{
+                            backgroundImage: `url(${request.requestUser.profilePicture})`,
+                          }}
+                          className="h-8 w-8 bg-cover bg-center rounded-full"
+                        />
+                        <p>{request.requestUser.username}</p>
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      {request.status === "pending" && (
+                        <p className="text-orange-500 flex items-center gap-1">
+                          <span className="material-symbols-outlined">
+                            hourglass_empty
+                          </span>
+                          Pending
+                        </p>
+                      )}
+                      {request.status === "accepted" && (
+                        <p className="text-green-500 flex items-center gap-1">
+                          <span className="material-symbols-outlined">
+                            check_circle
+                          </span>
+                          Accepted
+                        </p>
+                      )}
+                      {request.status === "denied" && (
+                        <p className="text-red-500 flex items-center gap-1">
+                          <span className="material-symbols-outlined">
+                            do_not_disturb_on
+                          </span>
+                          Deny
+                        </p>
+                      )}
+                    </td>
+                    <td className="p-4">
+                      <div className="flex flex-row gap-2">
+                        {request.status !== "accepted" && (
+                          <button
+                            onClick={() =>
+                              updateRequest(request._id, "accepted")
+                            }
+                            className="bg-green-500 text-white py-1 px-4 rounded-md"
+                          >
+                            Accept
+                          </button>
+                        )}
+                        {request.status !== "denied" && (
+                          <button
+                            onClick={() => updateRequest(request._id, "denied")}
+                            className="bg-red-500 text-white py-1 px-4 rounded-md"
+                          >
+                            Deny
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td className="text-center text-base py-10" colSpan={3}>
+                  No request for the moment.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

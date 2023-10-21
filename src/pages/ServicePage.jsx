@@ -98,77 +98,95 @@ function ServicePage() {
             </>
           )}
         </div>
-        <div className="flex flex-row justify-between items-center py-8">
-          <h1 className="text-3xl font-bold">{service.title}</h1>
-          <h2 className="text-3xl font-bold text-green-500">
-            {service.estimatePricePerDay}$ / DAY
-          </h2>
+        <h3 className="mt-8 text-sm">
+          {new Date(service.createdAt).toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })}
+        </h3>
+        <h1 className="text-3xl font-bold mt-2">{service.title}</h1>
+        <h2 className="text-xl mt-2 font-medium">
+          Estimate ${service.estimatePricePerDay} / Day
+        </h2>
+
+        <div className=" mt-12">
+          <h2 className="text-xl font-bold text-gray-700">About the service</h2>
+          <p className="mt-2 text-gray-500">{service.description}</p>
         </div>
-        <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
-          <div className="flex flex-row gap-2 items-center ">
+
+        <div className=" mt-12">
+          <h2 className="text-xl font-bold text-gray-700">
+            About the provider
+          </h2>
+          <div className="flex items-center gap-3 my-4">
             <div
               style={{
                 backgroundImage: `url(${service.owner.profilePicture})`,
               }}
-              className="h-8 w-8 rounded-full bg-center bg-cover"
-            ></div>
-            <p className="text-base font-semibold">{service.owner.username}</p>
+              className="h-10 w-10 rounded-full bg-center bg-cover"
+            />
+            <p className="text-lg">{service.owner.username}</p>
           </div>
-          <p className="mt-2">{service.description}</p>
-        </div>
-        <h3 className="text-2xl font-semibold mt-4">Contact</h3>
-        <div className="mt-4 border rounded-lg p-4 flex flex-col gap-1 items-center">
-          <div
-            className={`${
-              isOwner
-                ? null
-                : (!request || request.status !== "accepted") &&
-                  "blur-md select-none"
-            } text-xl text-center`}
-          >
-            <p>
-              Email:{" "}
-              <span className="font-bold">
+          <div className="border rounded-lg p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <p className="font-bold">From</p>
+              <p>{service.owner.city}</p>
+            </div>
+            <div>
+              <p className="font-bold">Member since</p>
+              <p>
+                {new Date(service.owner.createdAt).toLocaleDateString("en-US", {
+                  month: "short",
+                  year: "numeric",
+                })}
+              </p>
+            </div>
+            <div>
+              <p className="font-bold">Email</p>
+              <p className={service.owner.email ? null : "blur-sm select-none"}>
                 {service.owner.email ? service.owner.email : "email@email.com"}
-              </span>
-            </p>
-            <p>
-              Mobile:{" "}
-              <span className="font-bold">
-                {" "}
+              </p>
+            </div>
+            <div>
+              <p className="font-bold">Phone number</p>
+              <p
+                className={
+                  service.owner.phoneNumber ? null : "blur-sm select-none"
+                }
+              >
                 {service.owner.phoneNumber
-                  ? service.owner.phoneNumber
+                  ? "+" + service.owner.phoneNumber
                   : "00 00 00 00 00"}
-              </span>
-            </p>
+              </p>
+            </div>
           </div>
           {!isOwner && (
-            <div>
+            <div className="mt-4 max-w-sm">
               {!request && (
                 <Button handleOnClick={handleRequest}>
                   Ask for contact informations
                 </Button>
               )}
               {request && request.status === "pending" && (
-                <p className="bg-orange-500 py-2 px-4 text-white rounded-lg">
-                  Request pending
-                </p>
+                <p className="text-orange-500">Request pending</p>
               )}
               {request && request.status === "denied" && (
-                <p className="bg-red-500 py-2 px-4 text-white rounded-lg">
-                  Request denied
-                </p>
+                <p className="text-red-500">Request denied</p>
               )}
             </div>
           )}
         </div>
-        <h3 className="text-2xl font-semibold my-4">Reviews</h3>
-        <FormRating serviceId={id} getService={() => getService(id)} />
-        <Ratings
-          ratings={service.ratings}
-          getService={getService}
-          serviceId={id}
-        />
+
+        <div className=" mt-12">
+          <h2 className="text-xl font-bold text-gray-700 mb-4">Reviews</h2>
+          <FormRating serviceId={id} getService={() => getService(id)} />
+          <Ratings
+            ratings={service.ratings}
+            getService={getService}
+            serviceId={id}
+          />
+        </div>
       </div>
     );
   }

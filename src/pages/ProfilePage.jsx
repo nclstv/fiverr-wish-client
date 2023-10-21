@@ -75,7 +75,7 @@ function ProfilePage() {
         <span
           key={i}
           className={`text-3xl ${
-            i <= rating ? "text-yellow-400" : "text-gray-300"
+            i <= rating ? "text-orange-400" : "text-gray-300"
           }`}
         >
           ★
@@ -138,12 +138,7 @@ function ProfilePage() {
             ) : (
               <>
                 <h2 className="text-xl font-semibold">Phone number</h2>
-                <p className="text-gray-500">
-                  {user.phoneNumber.replace(
-                    /(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/,
-                    "$1 $2 $3 $4 $5"
-                  )}
-                </p>
+                <p className="text-gray-500">+{user.phoneNumber}</p>
               </>
             )}
           </div>
@@ -174,7 +169,7 @@ function ProfilePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {services.map((service) => (
             <Link to={`/services/${service._id}`} key={service._id}>
-              <div className="rounded-lg bg-gray-50 p-4 border flex gap-4 items-start">
+              <div className=" flex gap-4 items-start">
                 <div
                   className="bg-center bg-cover h-20 aspect-square rounded-md"
                   style={{ backgroundImage: `url(${service.image})` }}
@@ -186,8 +181,8 @@ function ProfilePage() {
                   <p className="text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap">
                     {service.description}
                   </p>
-                  <p className="text-gray-500">
-                    {service.estimatePricePerDay}$ / DAY
+                  <p className="font-semibold">
+                    Estimate ${service.estimatePricePerDay} / Day
                   </p>
                 </div>
               </div>
@@ -201,7 +196,7 @@ function ProfilePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {requests.map((request) => (
             <div
-              className={`rounded-lg bg-gray-50 p-4 border flex gap-4 items-start relative `}
+              className={`flex gap-4 items-start relative `}
               key={request._id}
             >
               <div
@@ -215,7 +210,7 @@ function ProfilePage() {
                 <p className="text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap">
                   @{request.service.owner.username}
                 </p>
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row gap-2 items-center">
                   <p
                     className={`text-gray-500 ${
                       request.status === "pending"
@@ -228,14 +223,14 @@ function ProfilePage() {
                     {request.status[0].toUpperCase() + request.status.slice(1)}
                   </p>
                   <Link
-                    className="bg-green-500 px-2 py-1 text-white rounded-md text-sm ml-auto"
+                    className="text-sm ml-auto"
                     to={`/services/${request.service._id}`}
                   >
                     Show more
                   </Link>
                   <button
                     onClick={() => handleDeleteRequest(request._id)}
-                    className="bg-red-500 px-2 py-1 text-white rounded-md text-sm"
+                    className="text-red-500 text-sm"
                   >
                     Delete
                   </button>

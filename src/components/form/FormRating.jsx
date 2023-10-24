@@ -22,6 +22,8 @@ function FormRating({ serviceId, getService }) {
       .catch((err) => {
         if (err.response.data.errors) {
           setErrors(err.response.data.errors);
+        } else if (err.response.data.message) {
+          setErrors(err.response.data.message);
         }
       });
   };

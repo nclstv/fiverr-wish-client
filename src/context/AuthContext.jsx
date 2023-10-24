@@ -30,8 +30,8 @@ function AuthProviderWrapper({ children }) {
           setIsLoading(false);
           setUser(user);
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          localStorage.removeItem("authToken");
           setIsLoggedIn(false);
           setIsLoading(false);
           setUser(null);

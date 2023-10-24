@@ -274,7 +274,7 @@ function ProfilePage() {
           ))}
         </div>
 
-        {ratings && (
+        {ratings && ratings.length > 0 && (
           <div className="mt-8">
             <h2 className="text-2xl font-semibold">Ratings Sent</h2>
             <div className="py-4">

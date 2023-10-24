@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "../components/utils/Input";
+import InputPhone from "../components/utils/InputPhone";
 import { AuthContext } from "../context/AuthContext";
 import servicesServices from "../services/ServicesServices";
 
@@ -68,6 +69,21 @@ function ProfilePage() {
       .catch((err) => {});
   };
 
+  const updateProfile = () => {
+    const update = { email, username, phoneNumber };
+    servicesServices
+      .updateProfile(update)
+      .then(({ data }) => {
+        user.username = data.username;
+        user.phoneNumber = data.phoneNumber;
+        user.email = data.email;
+        setIsEditable(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const RatingStars = ({ rating }) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -75,7 +91,7 @@ function ProfilePage() {
         <span
           key={i}
           className={`text-3xl ${
-            i <= rating ? "text-yellow-400" : "text-gray-300"
+            i <= rating ? "text-orange-400" : "text-gray-300"
           }`}
         >
           ★
@@ -132,18 +148,13 @@ function ProfilePage() {
 
           <div className="rounded-lg bg-gray-50 p-4 border flex flex-col gap-1">
             {isEditable ? (
-              <Input state={phoneNumber} setState={setPhoneNumber}>
+              <InputPhone value={phoneNumber} onChange={setPhoneNumber}>
                 Phone number
-              </Input>
+              </InputPhone>
             ) : (
               <>
                 <h2 className="text-xl font-semibold">Phone number</h2>
-                <p className="text-gray-500">
-                  {user.phoneNumber.replace(
-                    /(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/,
-                    "$1 $2 $3 $4 $5"
-                  )}
-                </p>
+                <p className="text-gray-500">+{user.phoneNumber}</p>
               </>
             )}
           </div>
@@ -153,20 +164,38 @@ function ProfilePage() {
               <h2 className="text-xl font-semibold">Password</h2>
               <p className="text-gray-500">************</p>
             </div>
-            <Link to="/password-edit">
+            {/* <Link to="/password-edit">
               <span className="material-symbols-outlined bg-green-500 h-10 w-10 flex justify-center items-center text-xl rounded-lg text-white cursor-pointer">
                 edit
               </span>
-            </Link>
+            </Link> */}
           </div>
         </div>
 
-        <button
-          onClick={handleEditClick}
-          className="my-4 px-8 py-1 bg-gradient-to-r from-green-500 to-lime-500 text-white rounded-md"
-        >
-          {isEditable ? "Save" : "Edit profile"}
-        </button>
+        {!isEditable && (
+          <button
+            onClick={handleEditClick}
+            className="my-4 px-8 py-1 bg-gradient-to-r from-green-500 to-lime-500 text-white rounded-md"
+          >
+            Edit profile
+          </button>
+        )}
+        {isEditable && (
+          <div>
+            <button
+              onClick={updateProfile}
+              className="my-4 px-8 py-1 bg-gradient-to-r from-green-500 to-lime-500 text-white rounded-md"
+            >
+              Save
+            </button>
+            <button
+              className="my-4 px-8 py-1 bg-red-500 text-white rounded-md ml-2"
+              onClick={handleEditClick}
+            >
+              Cancel
+            </button>
+          </div>
+        )}
 
         {services.length !== 0 && (
           <h2 className="text-2xl font-semibold py-8">Services Offered</h2>
@@ -174,7 +203,7 @@ function ProfilePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {services.map((service) => (
             <Link to={`/services/${service._id}`} key={service._id}>
-              <div className="rounded-lg bg-gray-50 p-4 border flex gap-4 items-start">
+              <div className=" flex gap-4 items-start">
                 <div
                   className="bg-center bg-cover h-20 aspect-square rounded-md"
                   style={{ backgroundImage: `url(${service.image})` }}
@@ -186,8 +215,8 @@ function ProfilePage() {
                   <p className="text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap">
                     {service.description}
                   </p>
-                  <p className="text-gray-500">
-                    {service.estimatePricePerDay}$ / DAY
+                  <p className="font-semibold">
+                    Estimate ${service.estimatePricePerDay} / Day
                   </p>
                 </div>
               </div>
@@ -201,7 +230,7 @@ function ProfilePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {requests.map((request) => (
             <div
-              className={`rounded-lg bg-gray-50 p-4 border flex gap-4 items-start relative `}
+              className={`flex gap-4 items-start relative `}
               key={request._id}
             >
               <div
@@ -215,7 +244,7 @@ function ProfilePage() {
                 <p className="text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap">
                   @{request.service.owner.username}
                 </p>
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row gap-2 items-center">
                   <p
                     className={`text-gray-500 ${
                       request.status === "pending"
@@ -228,14 +257,14 @@ function ProfilePage() {
                     {request.status[0].toUpperCase() + request.status.slice(1)}
                   </p>
                   <Link
-                    className="bg-green-500 px-2 py-1 text-white rounded-md text-sm ml-auto"
+                    className="text-sm ml-auto"
                     to={`/services/${request.service._id}`}
                   >
                     Show more
                   </Link>
                   <button
                     onClick={() => handleDeleteRequest(request._id)}
-                    className="bg-red-500 px-2 py-1 text-white rounded-md text-sm"
+                    className="text-red-500 text-sm"
                   >
                     Delete
                   </button>

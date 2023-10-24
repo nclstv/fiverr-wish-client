@@ -1,18 +1,23 @@
 import { useEffect, useRef } from "react";
 import "../../assets/styles/placeAutocomplete.css";
 
-function InputPlace({ value, setValue }) {
+function InputPlace({ value, setValue, setCity }) {
   const autoCompleteRef = useRef();
   const inputRef = useRef();
 
   const options = {
     componentRestrictions: { country: "fr" },
-    fields: ["address_components", "name"],
+    fields: ["address_components"],
     types: ["address"],
   };
 
   const handlePlaceChanged = () => {
     setValue(inputRef.current.value);
+    const place = autoCompleteRef.current.getPlace();
+    const filter = place.address_components.filter((item) =>
+      item.types.includes("locality")
+    );
+    setCity(filter[0].long_name);
   };
 
   useEffect(() => {

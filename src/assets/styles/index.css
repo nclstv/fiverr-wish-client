@@ -11,39 +11,30 @@
 .input-group {
   @apply relative bg-white;
 }
-
-input {
+.input-group input {
   @apply relative z-10 block w-full bg-transparent border border-gray-300 rounded-md px-4 pt-6 pb-2 text-base font-normal focus:outline-none focus:border-green-500;
 }
 
-label {
+.input-group label {
   @apply absolute top-[18px] left-4 text-gray-400 transition-all duration-100 z-0;
 }
 
-input:focus ~ label {
+.input-group input:focus ~ label {
   @apply text-green-500 text-sm top-2;
 }
 
-input:not(:placeholder-shown) ~ label {
+.input-group input:not(:placeholder-shown) ~ label {
   @apply text-sm top-2;
 }
 
-textarea {
+.input-group textarea {
   @apply relative resize-y z-10 block w-full bg-transparent border border-gray-300 rounded-md px-4 pt-6 pb-2 text-base font-normal focus:outline-none focus:border-green-500;
 }
 
-textarea:focus ~ label {
+.input-group textarea:focus ~ label {
   @apply text-green-500 text-sm top-2;
 }
 
-textarea:not(:placeholder-shown) ~ label {
+.input-group textarea:not(:placeholder-shown) ~ label {
   @apply text-sm top-2;
-}
-
-th {
-  @apply p-4;
-}
-
-td {
-  @apply p-4 border-b;
 }

@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react";
+import "react-phone-input-2/lib/style.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import authServices from "../../services/AuthServices";
 import servicesServices from "../../services/ServicesServices";
 import Button from "../utils/Button";
 import Input from "../utils/Input";
+import InputPhone from "../utils/InputPhone";
 import InputPlace from "../utils/InputPlace";
 import Spinner from "../utils/Spinner";
 
@@ -18,6 +20,7 @@ function FormSignup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [city, setCity] = useState(null);
   const [address, setAddress] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [isImageLoading, setIsImageLoading] = useState(false);
@@ -33,6 +36,7 @@ function FormSignup() {
       phoneNumber,
       address,
       profilePicture,
+      city,
     };
 
     authServices
@@ -68,18 +72,15 @@ function FormSignup() {
   return (
     <form
       onSubmit={handleSubmit}
-      className={`flex flex-col bg-gray-50 border-gray-200 border p-8 gap-4 justify-center w-full max-w-md rounded-xl ${
-        errorMessage && "border-red-400"
-      }`}
+      className={`flex flex-col p-8 gap-4 justify-center w-full max-w-md`}
     >
       <h1 className="text-center font-medium text-xl text-gray-700">
         Welcome, create your account.
       </h1>
-      <div className="border-b border-gray-300 h-0 my-4" />
       <div className="flex justify-center">
         <label
           htmlFor="file"
-          className="cursor-pointer flex justify-center items-center bg-white relative w-32 h-32 border left-0 top-0 bg-transparent border-gray-300 rounded-full text-base font-normal"
+          className="cursor-pointer flex justify-center items-center bg-white relative w-32 h-32 border left-0 top-0 bg-transparent border-gray-300 rounded-full text-base font-normal my-4"
         >
           {isImageLoading ? (
             <div className="flex items-center justify-center">
@@ -90,12 +91,14 @@ function FormSignup() {
               className="bg-cover bg-center w-full h-32 rounded-full overflow-hidden"
               style={{ backgroundImage: `url(${profilePicture})` }}
             >
-              <span class="material-symbols-outlined text-white bg-green-500 text-xl absolute bottom-0 right-0 w-10 h-10 flex justify-center items-center rounded-full border-2 border-gray-50">
+              <span className="material-symbols-outlined text-white bg-green-500 text-xl absolute bottom-0 right-0 w-10 h-10 flex justify-center items-center rounded-full border-2 border-gray-50">
                 edit
               </span>
             </div>
           ) : (
-            <span class="material-symbols-outlined text-4xl">add_reaction</span>
+            <span className="material-symbols-outlined text-4xl">
+              add_reaction
+            </span>
           )}
         </label>
       </div>
@@ -114,11 +117,9 @@ function FormSignup() {
       <Input state={password} setState={setPassword} type="password">
         Password*
       </Input>
-      <InputPlace value={address} setValue={setAddress} />
-      <Input state={phoneNumber} setState={setPhoneNumber}>
-        Phone number*
-      </Input>
-      <div className="border-b border-gray-300 h-0 my-4" />
+      <InputPlace value={address} setValue={setAddress} setCity={setCity} />
+      <InputPhone value={phoneNumber} onChange={setPhoneNumber} />
+      <div className="h-4" />
       <Button isLoading={isLoading}>Register</Button>
       {errorMessage && (
         <p className="text-red-500 text-sm text-center font-semibold">

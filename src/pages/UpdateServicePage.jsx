@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../components/utils/Button";
 import Input from "../components/utils/Input";
 import Spinner from "../components/utils/Spinner";
 import Textarea from "../components/utils/Textarea";
 import servicesServices from "../services/ServicesServices";
 
-function AddServicePage({ headerTitle, serviceId }) {
+function UpdateServicePage() {
+  const { serviceId } = useParams();
   const navigate = useNavigate();
 
   // Initialise state
@@ -17,19 +18,27 @@ function AddServicePage({ headerTitle, serviceId }) {
   const [errors, setErrors] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
-  const [uploadError, setUploadError] = useState(null);
+
+  useEffect(() => {
+    servicesServices
+      .getService(serviceId)
+      .then(({ data: { service } }) => {
+        setTitle(service.title);
+        setDescription(service.description);
+        setEstimatePricePerDay(service.estimatePricePerDay);
+        setImage(service.image);
+      })
+      .catch((err) => {});
+  }, [serviceId]);
 
   // handleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newServices = { title, image, estimatePricePerDay, description };
-
-    setIsLoading(true);
-
+    const updateService = { title, description, image, estimatePricePerDay };
     servicesServices
-      .create(newServices)
+      .updateService(serviceId, updateService)
       .then((result) => {
-        navigate(`/services/${result.data._id}`);
+        navigate(`/services/${serviceId}`);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -42,7 +51,6 @@ function AddServicePage({ headerTitle, serviceId }) {
 
   const handleFileUpload = (e) => {
     setIsImageLoading(true);
-    setUploadError("");
     const uploadData = new FormData();
     uploadData.append("image", e.target.files[0]);
 
@@ -52,12 +60,7 @@ function AddServicePage({ headerTitle, serviceId }) {
         setImage(response.data.fileUrl);
         setIsImageLoading(false);
       })
-      .catch((err) => {
-        if (err.response.data.message) {
-          setUploadError(err.response.data.message);
-        }
-        setIsImageLoading(false);
-      });
+      .catch((err) => console.log("Error while uploading the file: ", err));
   };
 
   return (
@@ -67,7 +70,7 @@ function AddServicePage({ headerTitle, serviceId }) {
         className="flex flex-col bg-gray-50 border-gray-200 border p-8 gap-4 justify-center w-full max-w-md rounded-xl"
       >
         <h1 className="text-center font-medium text-xl text-gray-700">
-          {headerTitle}
+          Update your service
         </h1>
         <div className="border-b border-gray-300 h-0 my-4" />
         <Input state={title} setState={setTitle}>
@@ -76,9 +79,7 @@ function AddServicePage({ headerTitle, serviceId }) {
         <div className="bg-white">
           <label
             htmlFor="file"
-            className={`cursor-pointer relative w-full border top-0  left-0 block w- bg-transparent ${
-              uploadError ? "border-red-500" : "border-gray-300"
-            } rounded-md p-4 text-base font-normal focus:outline-none focus:border-green-500`}
+            className="cursor-pointer relative w-full border top-0  left-0 block w- bg-transparent border-gray-300 rounded-md p-4 text-base font-normal focus:outline-none focus:border-green-500"
           >
             {isImageLoading ? (
               <div className="flex items-center justify-center">
@@ -94,14 +95,13 @@ function AddServicePage({ headerTitle, serviceId }) {
                 </span>
               </div>
             ) : (
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined">photo_library</span>
                 Image
               </div>
             )}
           </label>
         </div>
-        {uploadError && <p className="text-red-400 text-sm">{uploadError}</p>}
         <input
           className="hidden"
           type="file"
@@ -120,7 +120,7 @@ function AddServicePage({ headerTitle, serviceId }) {
           Description
         </Textarea>
         <div className="border-b border-gray-300 h-0 my-4" />
-        <Button isLoading={isLoading}>Create a service</Button>
+        <Button isLoading={isLoading}>Update service</Button>
         <div>
           {errors &&
             errors.map((error) => {
@@ -136,4 +136,4 @@ function AddServicePage({ headerTitle, serviceId }) {
   );
 }
 
-export default AddServicePage;
+export default UpdateServicePage;

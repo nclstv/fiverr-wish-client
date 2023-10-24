@@ -60,6 +60,26 @@ class ServicesServices {
   updateRequest = (requestId, status) => {
     return this.api.put("/api/requests/" + requestId, { status });
   };
+
+  createRating = (serviceId, requestBody) => {
+    return this.api.post("/api/ratings/" + serviceId, requestBody);
+  };
+
+  updateService = (serviceId, requestBody) => {
+    return this.api.put("/api/services/" + serviceId, requestBody);
+  };
+
+  deleteRating = (ratingId) => {
+    return this.api.delete("/api/ratings/" + ratingId);
+  };
+
+  getRatingMe = () => {
+    return this.api.get("/api/ratings/me/");
+  };
+
+  updateProfile = (requestBody) => {
+    return this.api.put("/api/profile/edit", requestBody);
+  };
 }
 
 const servicesServices = new ServicesServices();

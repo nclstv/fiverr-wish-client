@@ -76,6 +76,10 @@ class ServicesServices {
   getRatingMe = () => {
     return this.api.get("/api/ratings/me/");
   };
+
+  updateProfile = (requestBody) => {
+    return this.api.put("/api/profile/edit", requestBody);
+  };
 }
 
 const servicesServices = new ServicesServices();

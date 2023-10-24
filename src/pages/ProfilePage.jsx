@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "../components/utils/Input";
+import InputPhone from "../components/utils/InputPhone";
 import { AuthContext } from "../context/AuthContext";
 import servicesServices from "../services/ServicesServices";
 
@@ -68,6 +69,21 @@ function ProfilePage() {
       .catch((err) => {});
   };
 
+  const updateProfile = () => {
+    const update = { email, username, phoneNumber };
+    servicesServices
+      .updateProfile(update)
+      .then(({ data }) => {
+        user.username = data.username;
+        user.phoneNumber = data.phoneNumber;
+        user.email = data.email;
+        setIsEditable(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const RatingStars = ({ rating }) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -132,9 +148,9 @@ function ProfilePage() {
 
           <div className="rounded-lg bg-gray-50 p-4 border flex flex-col gap-1">
             {isEditable ? (
-              <Input state={phoneNumber} setState={setPhoneNumber}>
+              <InputPhone value={phoneNumber} onChange={setPhoneNumber}>
                 Phone number
-              </Input>
+              </InputPhone>
             ) : (
               <>
                 <h2 className="text-xl font-semibold">Phone number</h2>
@@ -148,20 +164,38 @@ function ProfilePage() {
               <h2 className="text-xl font-semibold">Password</h2>
               <p className="text-gray-500">************</p>
             </div>
-            <Link to="/password-edit">
+            {/* <Link to="/password-edit">
               <span className="material-symbols-outlined bg-green-500 h-10 w-10 flex justify-center items-center text-xl rounded-lg text-white cursor-pointer">
                 edit
               </span>
-            </Link>
+            </Link> */}
           </div>
         </div>
 
-        <button
-          onClick={handleEditClick}
-          className="my-4 px-8 py-1 bg-gradient-to-r from-green-500 to-lime-500 text-white rounded-md"
-        >
-          {isEditable ? "Save" : "Edit profile"}
-        </button>
+        {!isEditable && (
+          <button
+            onClick={handleEditClick}
+            className="my-4 px-8 py-1 bg-gradient-to-r from-green-500 to-lime-500 text-white rounded-md"
+          >
+            Edit profile
+          </button>
+        )}
+        {isEditable && (
+          <div>
+            <button
+              onClick={updateProfile}
+              className="my-4 px-8 py-1 bg-gradient-to-r from-green-500 to-lime-500 text-white rounded-md"
+            >
+              Save
+            </button>
+            <button
+              className="my-4 px-8 py-1 bg-red-500 text-white rounded-md ml-2"
+              onClick={handleEditClick}
+            >
+              Cancel
+            </button>
+          </div>
+        )}
 
         {services.length !== 0 && (
           <h2 className="text-2xl font-semibold py-8">Services Offered</h2>
